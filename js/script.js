@@ -38,30 +38,15 @@ noButton.addEventListener("click", function () {
 
 // Funciones
 function handleYesClick() {
-  const loadingScreen = document.querySelector('.loading-screen');
-  const loadingText = document.querySelector('.loading-text');
-  
-  // Mostrar mensaje inicial y ocultar botones
+  // Mostrar mensaje y ocultar botones
   titleElement.innerHTML = "Yayyy!! :3";
   buttonsContainer.classList.add("hidden");
-  changeImage("yes");
-  triggerConfetti();
 
-  // Esperar 1 segundo antes de mostrar la carga
-  setTimeout(() => {
-    // Ocultar elementos anteriores
-    titleElement.classList.add('hidden');
-    catImg.classList.add('hidden');
-    
-    // Mostrar pantalla de carga
-    loadingScreen.classList.remove('hidden');
-    loadingScreen.classList.add('show');
-    
-    // Redirección después de 5 segundos totales
-    setTimeout(() => {
-      window.location.href = 'carta.html';
-    }, 4000); // 4000ms + 1000ms inicial = 5 segundos
-  }, 1000);
+  // Cambiar la imagen a la de "sí"
+  changeImage("yes");
+
+  // Lanzar confetti
+  triggerConfetti();
 }
 
 function resizeYesButton() {
