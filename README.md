@@ -1,16 +1,44 @@
-# React + Vite
+# Alejandro Cabero — Cybersecurity Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio of **Alejandro Cabero Nacimento**, SIEM Analyst and Systems Engineering student at Universidad de Lima.
 
-Currently, two official plugins are available:
+Live site: https://complix20.github.io
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## About
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Cybersecurity portfolio showcasing professional experience in SIEM, SOC operations, cloud security (Azure, AWS, GCP, OCI), and enterprise architecture. Built with React 19 + Vite + Tailwind CSS.
 
-## Expanding the ESLint configuration
+## Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React 19
+- Vite 7
+- Tailwind CSS 3
+- Lucide React
+
+## Features
+
+- Bilingual ES / EN toggle
+- Animated particle network background (canvas)
+- Scroll-driven parallax on hero section
+- Scroll progress bar
+- Intersection Observer scroll animations
+- Vertical timeline for work experience
+- Floating mascot "Byte"
+- Fully responsive (mobile + desktop)
+
+## Run locally
+
+```bash
+npm install
+npm run dev
+```
+
+## Deploy to GitHub Pages
+
+```bash
+npm run deploy
+```
+
+Builds and pushes `dist/` to the `gh-pages` branch via gh-pages.

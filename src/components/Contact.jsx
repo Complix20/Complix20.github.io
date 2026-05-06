@@ -1,60 +1,96 @@
-import { Mail, Phone, MapPin, Linkedin, Github } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../data/translations';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 export default function Contact() {
   const { language } = useLanguage();
   const t = translations[language].contact;
 
+  const headingRef = useScrollAnimation();
+  const gridRef = useScrollAnimation(0.1);
+
+  const items = [
+    {
+      href: `mailto:${t.email}`,
+      icon: Mail,
+      label: 'Email',
+      value: t.email,
+      iconColor: 'text-blue-400',
+      borderHover: 'hover:border-blue-500/50',
+    },
+    {
+      href: `tel:${t.phone}`,
+      icon: Phone,
+      label: t.labels.phone,
+      value: t.phone,
+      iconColor: 'text-green-400',
+      borderHover: 'hover:border-green-500/50',
+    },
+    {
+      href: null,
+      icon: MapPin,
+      label: t.labels.location,
+      value: t.location,
+      iconColor: 'text-purple-400',
+      borderHover: '',
+    },
+    {
+      href: `https://linkedin.com/in/${t.linkedin}`,
+      icon: Linkedin,
+      label: 'LinkedIn',
+      value: t.linkedin,
+      iconColor: 'text-blue-500',
+      borderHover: 'hover:border-blue-500/50',
+      external: true,
+    },
+  ];
+
   return (
-    <section id="contact" className="py-20 bg-slate-900">
+    <section id="contact" className="py-24 bg-slate-900/80">
       <div className="max-w-4xl mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+
+        <h2
+          ref={headingRef}
+          className="fade-up text-4xl md:text-5xl font-bold text-center mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+        >
           {t.title}
         </h2>
-        <p className="text-center text-slate-400 mb-12 text-lg">{t.subtitle}</p>
+        <p className="text-center text-slate-500 mb-12">{t.subtitle}</p>
 
-        <div className="grid md:grid-cols-2 gap-6">
-          <a 
-            href={`mailto:${t.email}`}
-            className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 hover:border-blue-500/50 transition-all hover:scale-105 group"
-          >
-            <Mail className="w-8 h-8 text-blue-400 mb-3 group-hover:scale-110 transition-transform" />
-            <h3 className="text-lg font-semibold text-white mb-2">Email</h3>
-            <p className="text-slate-400">{t.email}</p>
-          </a>
+        <div ref={gridRef} className="stagger-grid grid sm:grid-cols-2 gap-4 mb-10">
+          {items.map((item, i) => {
+            const Icon = item.icon;
+            const Tag = item.href ? 'a' : 'div';
+            const extraProps = item.href
+              ? {
+                  href: item.href,
+                  ...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {}),
+                }
+              : {};
 
-          <a 
-            href={`tel:${t.phone}`}
-            className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 hover:border-blue-500/50 transition-all hover:scale-105 group"
-          >
-            <Phone className="w-8 h-8 text-green-400 mb-3 group-hover:scale-110 transition-transform" />
-            <h3 className="text-lg font-semibold text-white mb-2">Teléfono</h3>
-            <p className="text-slate-400">{t.phone}</p>
-          </a>
-
-          <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6">
-            <MapPin className="w-8 h-8 text-purple-400 mb-3" />
-            <h3 className="text-lg font-semibold text-white mb-2">Ubicación</h3>
-            <p className="text-slate-400">{t.location}</p>
-          </div>
-
-          <a 
-            href={`https://linkedin.com/in/${t.linkedin}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 hover:border-blue-500/50 transition-all hover:scale-105 group"
-          >
-            <Linkedin className="w-8 h-8 text-blue-500 mb-3 group-hover:scale-110 transition-transform" />
-            <h3 className="text-lg font-semibold text-white mb-2">LinkedIn</h3>
-            <p className="text-slate-400">{t.linkedin}</p>
-          </a>
+            return (
+              <Tag
+                key={i}
+                {...extraProps}
+                className={`stagger-item flex items-start gap-4 bg-slate-800/50 border border-slate-700/60 rounded-2xl p-6 card-glow ${item.borderHover} transition-all duration-250 ${item.href ? 'cursor-pointer hover:-translate-y-0.5' : 'cursor-default'}`}
+              >
+                <div className="p-2.5 bg-slate-700/50 rounded-xl shrink-0">
+                  <Icon className={`w-5 h-5 ${item.iconColor}`} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs text-slate-500 uppercase tracking-wider mb-1">{item.label}</p>
+                  <p className="text-slate-200 text-sm font-medium truncate">{item.value}</p>
+                </div>
+              </Tag>
+            );
+          })}
         </div>
 
-        <div className="mt-12 text-center">
-          <a 
+        <div className="text-center">
+          <a
             href={`mailto:${t.email}`}
-            className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-8 py-4 rounded-2xl text-lg font-semibold shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:-translate-y-1"
+            className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 px-10 py-4 rounded-2xl font-semibold text-white shadow-xl shadow-blue-500/20 hover:shadow-blue-500/35 transition-all duration-250 hover:-translate-y-0.5 cursor-pointer"
           >
             {t.cta}
           </a>

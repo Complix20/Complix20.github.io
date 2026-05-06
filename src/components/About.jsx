@@ -1,57 +1,90 @@
-import { Shield, TrendingUp, Server } from 'lucide-react';
+import { Shield, Server, TrendingUp } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../data/translations';
+import { useScrollAnimation } from '../hooks/useScrollAnimation';
+
+const cardIcons = [Shield, Server, TrendingUp];
+const cardColors = [
+  { border: 'border-blue-500/20', bg: 'from-blue-500/8 to-blue-500/4', icon: 'text-blue-400' },
+  { border: 'border-purple-500/20', bg: 'from-purple-500/8 to-purple-500/4', icon: 'text-purple-400' },
+  { border: 'border-indigo-500/20', bg: 'from-indigo-500/8 to-indigo-500/4', icon: 'text-indigo-400' },
+];
 
 export default function About() {
   const { language } = useLanguage();
   const t = translations[language].about;
 
+  const headingRef = useScrollAnimation();
+  const textRef = useScrollAnimation();
+  const cardsRef = useScrollAnimation();
+
   return (
-    <section id="about" className="py-20 bg-slate-900/50">
+    <section id="about" className="py-24 bg-slate-900/60">
       <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+
+        <h2
+          ref={headingRef}
+          className="fade-up text-4xl md:text-5xl font-bold text-center mb-16 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+        >
           {t.title}
         </h2>
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <p className="text-lg text-slate-300 leading-relaxed">
-              {t.description}
-            </p>
-            <p className="text-lg text-slate-300 leading-relaxed">
-              {t.focus}
-            </p>
+        <div className="grid md:grid-cols-2 gap-14 items-center">
 
-            <div className="grid grid-cols-2 gap-4 pt-6">
-              <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+          {/* Text + stats + languages */}
+          <div ref={textRef} className="fade-left space-y-6">
+            <p className="text-slate-300 leading-relaxed text-[1.05rem]">{t.description}</p>
+            <p className="text-slate-400 leading-relaxed">{t.focus}</p>
+
+            {/* Stats */}
+            <div className="grid grid-cols-2 gap-4 pt-2">
+              <div className="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 card-glow">
                 <div className="text-3xl font-bold text-blue-400 mb-1">{t.stats.year}</div>
-                <div className="text-sm text-slate-400">{t.stats.experience}</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider">{t.stats.experience}</div>
               </div>
-              <div className="bg-slate-800/50 p-4 rounded-xl border border-slate-700">
+              <div className="bg-slate-800/60 border border-slate-700/60 rounded-2xl p-5 card-glow">
                 <div className="text-3xl font-bold text-purple-400 mb-1">1000+</div>
-                <div className="text-sm text-slate-400">{t.stats.alerts}</div>
+                <div className="text-xs text-slate-500 uppercase tracking-wider">{t.stats.alerts}</div>
+              </div>
+            </div>
+
+            {/* Languages */}
+            <div className="flex items-center gap-3 pt-1">
+              <span className="text-xs text-slate-500 uppercase tracking-wider shrink-0">
+                {t.languagesLabel}
+              </span>
+              <div className="flex gap-2 flex-wrap">
+                {t.languages.map((lang) => (
+                  <span
+                    key={lang.name}
+                    className="px-3 py-1 bg-slate-800/60 border border-slate-700/60 rounded-lg text-xs text-slate-300"
+                  >
+                    {lang.name}
+                    <span className="text-blue-400 ml-1">· {lang.level}</span>
+                  </span>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="space-y-4">
-            <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 p-6 rounded-2xl">
-              <Shield className="w-12 h-12 text-blue-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">SIEM & SOC</h3>
-              <p className="text-slate-400">Monitoreo 24/7, análisis de alertas y respuesta a incidentes</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-purple-500/10 to-indigo-500/10 border border-purple-500/20 p-6 rounded-2xl">
-              <Server className="w-12 h-12 text-purple-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Cloud Security</h3>
-              <p className="text-slate-400">Azure, AWS y OCI - Infraestructura segura en la nube</p>
-            </div>
-
-            <div className="bg-gradient-to-br from-indigo-500/10 to-blue-500/10 border border-indigo-500/20 p-6 rounded-2xl">
-              <TrendingUp className="w-12 h-12 text-indigo-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{t.stats.integration}</h3>
-              <p className="text-slate-400">{t.stats.sources} de datos integradas</p>
-            </div>
+          {/* Feature cards */}
+          <div ref={cardsRef} className="fade-right space-y-4">
+            {t.cards.map((card, i) => {
+              const Icon = cardIcons[i];
+              const color = cardColors[i];
+              return (
+                <div
+                  key={i}
+                  className={`bg-gradient-to-br ${color.bg} border ${color.border} p-5 rounded-2xl card-glow cursor-default`}
+                >
+                  <div className="flex items-center gap-3 mb-2">
+                    <Icon className={`w-5 h-5 ${color.icon}`} />
+                    <h3 className="font-semibold text-white">{card.title}</h3>
+                  </div>
+                  <p className="text-slate-400 text-sm leading-relaxed">{card.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
