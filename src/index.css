@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Fonts ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ── Scroll animations ── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-left {
+  opacity: 0;
+  transform: translateX(-40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fade-right {
+  opacity: 0;
+  transform: translateX(40px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.in-view {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Stagger grid ── */
+.stagger-grid .stagger-item {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.stagger-grid.in-view .stagger-item:nth-child(1)  { opacity: 1; transform: none; transition-delay: 0.04s; }
+.stagger-grid.in-view .stagger-item:nth-child(2)  { opacity: 1; transform: none; transition-delay: 0.09s; }
+.stagger-grid.in-view .stagger-item:nth-child(3)  { opacity: 1; transform: none; transition-delay: 0.14s; }
+.stagger-grid.in-view .stagger-item:nth-child(4)  { opacity: 1; transform: none; transition-delay: 0.19s; }
+.stagger-grid.in-view .stagger-item:nth-child(5)  { opacity: 1; transform: none; transition-delay: 0.24s; }
+.stagger-grid.in-view .stagger-item:nth-child(6)  { opacity: 1; transform: none; transition-delay: 0.29s; }
+.stagger-grid.in-view .stagger-item:nth-child(7)  { opacity: 1; transform: none; transition-delay: 0.34s; }
+.stagger-grid.in-view .stagger-item:nth-child(8)  { opacity: 1; transform: none; transition-delay: 0.39s; }
+
+/* ── Respect reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .fade-up, .fade-left, .fade-right, .scale-in,
+  .stagger-grid .stagger-item {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── Hero grid background ── */
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(96, 165, 250, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(96, 165, 250, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* ── Floating orbs ── */
+@keyframes float-a {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-28px) scale(1.06); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(20px) scale(0.96); }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.85; }
+}
+
+.orb-a {
+  animation: float-a 9s ease-in-out infinite, pulse-glow 5s ease-in-out infinite;
+}
+.orb-b {
+  animation: float-b 11s ease-in-out infinite 1.5s, pulse-glow 7s ease-in-out infinite 2s;
+}
+
+/* ── Cursor blink ── */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+  color: #60a5fa;
+}
+
+/* ── Neon text glow ── */
+.neon-glow {
+  text-shadow:
+    0 0 20px rgba(96, 165, 250, 0.45),
+    0 0 60px rgba(96, 165, 250, 0.15);
+}
+
+/* ── Card glow on hover ── */
+.card-glow {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.card-glow:hover {
+  box-shadow: 0 0 28px rgba(96, 165, 250, 0.18);
+}
+
+/* ── Badge pulse dot ── */
+@keyframes ping-dot {
+  0% { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+.ping-dot {
+  animation: ping-dot 1.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* ── Timeline ── */
+.timeline-dot {
+  box-shadow: 0 0 0 4px #0f172a, 0 0 12px rgba(96, 165, 250, 0.5);
+}
+
+/* ── Scroll indicator ── */
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(8px); opacity: 0.5; }
+}
+.scroll-bounce {
+  animation: scroll-bounce 1.8s ease-in-out infinite;
+}
+
+/* ── Mascot float ── */
+@keyframes mascot-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-11px); }
+}
+.mascot-float {
+  animation: mascot-float 3.6s ease-in-out infinite;
+  filter: drop-shadow(0 6px 18px rgba(59,130,246,0.28));
+  transition: filter 0.3s ease;
+}
+.mascot-float:hover {
+  filter: drop-shadow(0 8px 28px rgba(59,130,246,0.55));
+}
+
+/* ── Speech bubble appear ── */
+@keyframes bubble-appear {
+  from { opacity: 0; transform: translateY(6px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.bubble-appear {
+  animation: bubble-appear 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+
+/* ── Skill tag ── */
+.skill-tag {
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.skill-tag:hover {
+  box-shadow: 0 0 10px rgba(96, 165, 250, 0.25);
+}
+
+/* ── Project card ── */
+.project-card {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+.project-card:hover {
+  box-shadow: 0 0 32px rgba(96, 165, 250, 0.18);
+}
+.project-overlay {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+/* ── Mono font for code-like elements ── */
+.font-mono-tech {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
